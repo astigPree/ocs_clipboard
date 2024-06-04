@@ -20,6 +20,10 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poetsen+One&family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
 
+    
+    <link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap" rel="stylesheet">
+
 
 </head>
 <body>
@@ -69,18 +73,39 @@
         <div class="sticky-notes-container">
 
             {% for note in notes %}
-                <div class="sticky-note" note_id="{{ note.id }}">
+                <div class="sticky-note" note_id="{{ note.id }}" >
         
                     <div class="note-header">
-                        <p class="nickname" style="color: {{note.nickname_color}}; font-family: {{ note.nickname_font }}">{{ note.nickname }}</p>
+                        <p class="nickname" id="nickname-{{note.id}}" style="color: {{note.nickname_color}};" >{{ note.nickname }}</p>
                         <p class="emoji">{{ note.emoji }}</p>
                         <span class="pin"></span>
                     </div>
 
-                    <div class="sticky-note-content">
-                        <p style="color:{{ note.content_color }}; font-family: {{ note.content_font }}">{{ note.content }}</p>
+                    <div class="sticky-note-content" id="content-{{note.id}}">
+                        <p style="color:{{ note.content_color }}; ">{{ note.content }}</p>
                     </div>
                 </div>
+
+                <script>
+                    //changeNicknameFont({{note.nickname_font}}, `nickname-${note.id}`);
+                    //changeContentFont( {{note.content_font}}, `content-${note.id}`);
+                    
+                    function onetimeChange(){
+                        const selected_font = getComputedStyle(document.documentElement).getPropertyValue('{{note.nickname_font}}');
+                        const sticky_nickname = document.getElementById('nickname-{{note.id}}');
+                        sticky_nickname.style.fontFamily = selected_font;
+                        console.log(` {{note.nickname_font}} change success`);
+                        
+                        const selected_content_font = getComputedStyle(document.documentElement).getPropertyValue('{{note.content_font}}');
+                        const sticky_content_parent = document.getElementById('content-{{note.id}}')
+                        const content = sticky_content_parent.getElementsByTagName('p')[0];
+                        content.style.fontFamily = selected_content_font;
+                        console.log(`{{note.content_font}} change success`);
+                    }
+
+                    onetimeChange();
+
+                </script>
                 
             {% endfor %}
                 
@@ -125,6 +150,23 @@
 
 
     <script>
+
+        function changeNicknameFont(font_used , note_id){
+            const selected_font = getComputedStyle(document.documentElement).getPropertyValue(font_used);
+            const sticky_nickname = document.getElementById(note_id);
+            sticky_nickname.style.fontFamily = selected_font;
+            sticky_nickname.setAttribute('nickname_font', font_used);
+            console.log(`${note_id} change success`);
+        }
+
+        function changeContentFont(font_used, note_id){
+            const selected_font = getComputedStyle(document.documentElement).getPropertyValue(font_used);
+            const sticky_content_parent = document.getElementById(note_id)
+            const content = sticky_content_parent.getElementsByTagName('p')[0];
+            content.style.fontFamily = selected_font;
+            content.setAttribute('content_font' , font_used);
+            console.log(`${note_id} change success`);
+        }
 
         function fetchStickyNotes(direction ) {
             var csrftoken = '{{ csrf_token }}';

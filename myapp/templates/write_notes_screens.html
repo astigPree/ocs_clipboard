@@ -150,7 +150,7 @@
                     </div>
 
                     <div class="sticky-note-content">
-                        <p nickname_color="black" nickname_font="--secondary-font">
+                        <p content_color="black" content_font="--secondary-font">
                             Sana magustuhan nyu ang ginawa namin at ilabas nyu ang tunay nyu nararamdaman na hindi kayo makikilala at makapagbibigay ng gaan sa inyung nararamdaman.
                         </p>
                     </div>
@@ -202,7 +202,7 @@
 
             const sticky_content_parent = document.getElementsByClassName('sticky-note-content')[0];
             const content_color = sticky_content_parent.getElementsByTagName('p')[0].getAttribute('content_color');
-            const content_font = sticky_content_parent.getElementsByTagName('p')[0].getAttribute('content_color');
+            const content_font = sticky_content_parent.getElementsByTagName('p')[0].getAttribute('content_font');
 
             var csrftoken = '{{ csrf_token }}';
 
@@ -296,6 +296,7 @@
 
         function changeContentFont(font_used){
             const selected_font = getComputedStyle(document.documentElement).getPropertyValue(font_used);
+            console.log(selected_font);
             const sticky_content_parent = document.getElementsByClassName('sticky-note-content')[0]
             const content = sticky_content_parent.getElementsByTagName('p')[0];
             content.style.fontFamily = selected_font;
