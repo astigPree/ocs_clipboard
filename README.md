@@ -1,0 +1,2 @@
+"# OCNotes" 
+"# ocs_clipboard" 
