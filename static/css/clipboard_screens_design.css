@@ -1,0 +1,273 @@
+.poetsen-one-regular {
+    font-family: "Poetsen One", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.quicksand-light {
+    font-family: "Quicksand", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 300;
+    font-style: normal;
+}
+  
+
+:root{
+    --primary-color : #791717;
+    --secondary-color : #B76767;
+    --tertiary-color: #FFFFFF;
+    --primary-font : "Poetsen One";
+    --secondary-font : "Quicksand";
+
+    --comic-san : "Comic Sans MS", "Comic Sans", cursive;
+    --arial-rounded : 'Arial Rounded MT Bold', Arial, sans-serif;
+    --lucida-writing : 'Lucida Handwriting', cursive;
+    --bradley-hand : 'Bradley Hand', cursive;
+    --chalkboard-se : 'Chalkboard SE', sans-serif;
+    --dakota : 'Dakota', cursive;
+    --permanent-marker : 'Permanent Marker', cursive;
+    --indie-flower : 'Indie Flower', cursive;
+}   
+
+* {
+    color: var(--tertiary-color);
+    margin: 0;
+}
+
+body{
+    background-color: var(--primary-color);
+    margin: 0;
+    padding-bottom: 13.0svh;
+    min-width: 326px;
+}
+
+.tool-bar{
+    z-index: 5;
+    position: fixed;
+    bottom: 0;
+    display: flex;
+    width: 100%;
+    background-color: var(--secondary-color);
+    justify-content: space-around;
+    height: 8.5svh;
+    box-shadow: 0.0svh -0.5svh 1.0svh rgba(0,0,0,0.2);
+    padding-bottom: 0.5svh;
+}
+
+.tool{
+    width: fit-content;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    /* background-color: rebeccapurple; */
+    margin-top: 1.0svh;
+    opacity: 0.5;
+    cursor: pointer;
+}
+
+.tool svg{
+    flex : 1;
+    height: 4.0svh;
+    width: 4.0svh;
+}
+
+.tool p{
+    flex: 0;
+    font-family: var(--secondary-font);
+    color: var(--tertiary-color);
+}
+
+.tool:nth-child(1){
+    opacity: 1;
+}
+
+
+
+.header-bar{
+    display: flex;
+    flex-direction: row;
+    margin-top: 7.0svh;
+    justify-content: space-between;
+    padding-bottom: 8.0svh;
+}
+
+.header-left{
+    display: flex;
+    flex-direction: column  ;
+    width: 200px;
+    /* background-color: rebeccapurple; */
+    align-items: center ;
+    height: fit-content;
+}
+
+.app_name{
+    font-size: 5.0svh;
+    width: fit-content;
+    font-family:  var(--primary-font);
+}
+
+.current_day{
+    margin-top: 0.3svh;
+    width: fit-content;
+    font-style: italic;
+    font-weight: var(--secondary-font);
+    font-size: 2.0svh;
+}
+
+.header-right{
+    display: flex;
+    flex-direction: column;
+    /* background-color: rebeccapurple; */
+    align-items: center;
+    transform: rotate(15deg);
+    width: 100px;
+    margin-right: 3.0svh;
+}
+
+.number-page{
+    background-color: var(--secondary-color);
+    width: 10.0svh;
+    border-radius: 50%;
+    height: 10.0svh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.number-page > *{
+    font-size: 5.0svh;
+    color: var(--primary-color);
+    font-family: var(--primary-font);
+    
+}
+
+.text-page{
+    text-align: center;
+    width: fit-content;
+    font-weight: lighter;
+    font-family: var(--secondary-font);
+    font-size: 3.5svh;
+}
+
+
+
+.sticky-notes-container{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    /* background-color: rebeccapurple; */
+    row-gap: 10.0svh;
+    column-gap: 10.0svh;
+    padding-top: 1.0svh;
+    padding-bottom: 5.0svh;
+}
+
+
+.sticky-note {
+    transform: rotate(-5deg);
+    width: 250px;
+    height: 230px;
+    background-color: #f9f485; 
+    box-shadow: 5px 5px 15px rgba(0,0,0,0.2);
+    padding: 10px;
+    font-size: 1rem;
+    line-height: 1.5;
+    border-radius: 5px; 
+    flex: 0 1 250px;
+}
+
+
+.note-header{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    height: fit-content;
+}
+
+.nickname{
+    font-family: var(--primary-font);
+    margin: 0;
+    width: fit-content;
+    font-size: 3.0svh;
+    margin-top: 1.0svh;
+}
+/* 
+.pin-emoji{
+    height: fit-content;
+    display: flex;
+    flex-direction: row;
+    width: fit-content;
+}  */
+
+.pin{
+    background-color: var(--secondary-color);
+    box-shadow: 0 0 1.0svh rgba(0,0,0,0.2);
+    border-radius: 50%;
+    width: 5.0svh;
+    height: 5.0svh;
+    position: relative;
+    top: -20px;
+    right: -20px;
+}
+
+.emoji{
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    font-size: 5.9svh;
+    transform: rotate(11deg);
+}
+
+.sticky-note-content > *{
+    color: black;
+    font-family: var(--secondary-font);
+    font-weight: 400;
+    margin-top: 3.1svh;
+    word-wrap: break-word;
+}
+
+.paging-buttons{
+    display: flex;
+    height: 10.0svh;
+    justify-content: space-around;
+    align-items: center;
+}
+
+
+.page-button{
+    text-align: center;
+    display: flex;
+    width: fit-content;
+    flex-direction: column;
+    gap: 1.0svh;
+    background-color: var(--secondary-color);
+    padding: 1.0svh;
+    border-radius: 1.0svh;
+    align-items: center;
+    cursor: pointer;
+}
+
+.page-button svg{
+    flex: 1;
+    width: 4.0svh;
+    height: 4.0svh;
+}
+
+.page-button p{
+    flex: 0;
+    font-family: var(--secondary-font);
+}
+
+.page-button:nth-child(1){
+    transform: rotate(-5deg);
+}
+
+.page-button:nth-child(1) svg{
+    transform: scaleX(-1);
+}
+
+.page-button:nth-child(3){
+    transform: rotate(5deg);
+}

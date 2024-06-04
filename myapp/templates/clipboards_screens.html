@@ -1,0 +1,286 @@
+{% load static %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    
+    <link rel="stylesheet" href="{% static 'css\clipboard_screens_design.css' %}">
+    <script defer scr="{% static 'script\sticky_notes_wall.js' %}"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poetsen+One&display=swap" rel="stylesheet">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poetsen+One&family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
+
+
+</head>
+<body>
+
+    <div class="tool-bar">
+        <div class="tool">
+            <svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 50 50">
+                <g fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+                    <path stroke="#FFFFFF" d="M35.417 14.583v18.75a2.083 2.083 0 0 1-2.084 2.084h-25a2.083 2.083 0 0 1-2.083-2.084v-18.75A2.083 2.083 0 0 1 8.333 12.5h25"/>
+                    <path stroke="#FFFFFF" d="M10.417 43.75h31.25a2.083 2.083 0 0 0 2.083-2.083V20.833"/>
+                    <path stroke="#FFFFFF" d="m34.563 13.354l-5.396 5.396m12.5-8.333a4.167 4.167 0 1 0-8.334 0v0a4.167 4.167 0 1 0 8.334 0"/>
+                </g>
+            </svg>
+            <p>Oc's Notes</p>
+        </div>
+        <div class="tool" onclick="changeTemplate('{% url 'write' %}');">
+            <svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 16 16">
+                <path fill="currentColor" d="M11.726 2.56a1.914 1.914 0 1 1 2.707 2.708l-2.64 2.64a2.5 2.5 0 0 1-1.06.63l-1.466.432a1 1 0 0 1-1.242-1.24l.43-1.467A2.5 2.5 0 0 1 9.087 5.2zm2 .708a.914.914 0 0 0-1.293 0l-2.64 2.639a1.5 1.5 0 0 0-.378.638l-.43 1.466l1.464-.432c.24-.071.46-.201.636-.378l2.64-2.64a.914.914 0 0 0 0-1.293M9.872 3H3.5A2.5 2.5 0 0 0 1 5.5v5A2.5 2.5 0 0 0 3.5 13h9a2.5 2.5 0 0 0 2.5-2.5V6.115l-1 1V10.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 10.5V7.272c.555-.453 1.19-.864 1.749-1.071c.31-.116.557-.153.735-.132c.157.019.265.08.35.208c.126.189.126.34.045.537c-.098.24-.3.497-.573.83l-.034.043c-.243.295-.538.655-.716 1.043c-.201.436-.275.95-.003 1.494c.42.842 1.368.932 2.115.788a4.429 4.429 0 0 0 2.186-1.158a.5.5 0 1 0-.708-.708c-.428.429-1.08.77-1.668.884c-.62.12-.924-.04-1.03-.254c-.104-.206-.093-.392.016-.628c.122-.266.342-.535.616-.87l.01-.012c.248-.302.551-.673.715-1.073c.184-.45.201-.96-.139-1.47a1.444 1.444 0 0 0-1.065-.647c-.397-.047-.814.044-1.2.187c-.469.174-.952.448-1.401.758V5.5A1.5 1.5 0 0 1 3.5 4h5.372z"/>
+            </svg>
+            <p>Write Notes</p>
+        </div>
+        <div class="tool" onclick="changeTemplate('{% url 'suggestion' %}');">
+            <svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 20 20">
+                <path fill="currentColor" d="M8.5 4.498a1.5 1.5 0 1 1 3 0a1.5 1.5 0 0 1-3 0m1.5-2.5a2.5 2.5 0 0 0-2.43 3.086L5.471 4.15a1.76 1.76 0 0 0-2.317.88c-.4.882-.007 1.917.877 2.31L7 8.662v2.287l-1.877 4.645a1.75 1.75 0 0 0 3.246 1.311l.085-.213a5.5 5.5 0 0 1-.424-1.618l-.589 1.457a.75.75 0 1 1-1.39-.562l1.876-4.645A1 1 0 0 0 8 10.949V8.662a1 1 0 0 0-.593-.914L4.439 6.427a.74.74 0 0 1-.374-.983a.76.76 0 0 1 1-.38l3.918 1.744a2.5 2.5 0 0 0 2.034 0l3.918-1.744a.76.76 0 0 1 1 .38a.74.74 0 0 1-.373.983l-2.969 1.321a1 1 0 0 0-.593.914v.545a5.5 5.5 0 0 1 1-.185v-.36l2.968-1.322a1.74 1.74 0 0 0 .878-2.31a1.76 1.76 0 0 0-2.318-.88l-2.097.934q.069-.282.07-.586a2.5 2.5 0 0 0-2.5-2.5M18 14.5a4.5 4.5 0 1 1-9 0a4.5 4.5 0 0 1 9 0m-4.5 1.88a.625.625 0 1 0 0 1.25a.625.625 0 0 0 0-1.25m0-4.877c-1.048 0-1.864.818-1.853 1.955a.5.5 0 1 0 1-.01c-.006-.579.36-.945.853-.945c.473 0 .854.392.854.95c0 .202-.072.315-.36.544l-.278.215c-.506.404-.716.717-.716 1.288a.5.5 0 0 0 .992.09l.011-.156c.017-.148.1-.254.346-.448l.277-.215c.513-.41.728-.732.728-1.318c0-1.104-.823-1.95-1.854-1.95"/>
+            </svg>
+            <p>Suggestions</p>
+        </div>
+
+    </div>
+
+    <div class="container">
+
+
+        <div class="header-bar">
+            <div class="header-left">        
+                <h1 class="app_name">OC Notes</h1>
+                <h4 class="current_day" id="currentDate"></h4>
+            </div>
+            <div class="header-right">
+                <div class="number-page"><h1 id="page-number"> 1 </h1></div>
+                <p class="text-page">page</p>
+            </div>
+        </div>
+
+
+        {% comment %} Division for the main content  {% endcomment %}
+        <div class="sticky-notes-container">
+
+            {% for note in notes %}
+                <div class="sticky-note" note_id="{{ note.id }}">
+        
+                    <div class="note-header">
+                        <p class="nickname" style="color: {{note.nickname_color}}; font-family: {{ note.nickname_font }}">{{ note.nickname }}</p>
+                        <p class="emoji">{{ note.emoji }}</p>
+                        <span class="pin"></span>
+                    </div>
+
+                    <div class="sticky-note-content">
+                        <p style="color:{{ note.content_color }}; font-family: {{ note.content_font }}">{{ note.content }}</p>
+                    </div>
+                </div>
+                
+            {% endfor %}
+                
+
+
+        </div>
+
+        <div class="paging-buttons">
+            <div class="page-button" onclick="fetchStickyNotes('down')" id="prev-page-button">
+                <svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 24 24">
+                    <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m15 11l3 2m0-8a1 1 0 1 0 0-2a1 1 0 0 0 0 2ZM9.5 9.5L9.525 6H15L8 17H4m11-9l-3 5l.5 1L17 7.5L15 6m-4 7l5 3.5v5"/>
+                </svg>
+                <p>go back</p>
+            </div>
+            <div class="page-button" onclick="changeTemplate('{% url 'home' %}')">
+                <svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 72 72">
+                    <path fill="#ffffff" d="m52.501 10.564l-10.328 7.859v13.453h4.78v-9.231l5.583-4.311l5.597 4.311v9.231h4.781V18.435l-10.413-7.871z"/>
+                    <g fill="#ffffff">
+                        <path d="M25.267 39.441v2.214l4.16 5.124a6.622 6.622 0 0 1 .756 2.705l.406 9.151c.086 1.78-.824 2.72-1.736 2.72c-.97 0-1.72-.912-1.884-2.631l-1.053-8.66L19 44.172a3.216 3.216 0 0 1-1.113-2.366a5.417 5.417 0 0 1 .765-2.581l3.293-5.947c1.141-2.281 2.256-3.091 3.762-3.091a2.714 2.714 0 0 1 2.68 2.767Zm-9.152 6.549l-2.229 3.37l-6.331 3.07a1.42 1.42 0 0 0-.836 1.742a1.236 1.236 0 0 0 1.602.818l6.035-1.85a5.372 5.372 0 0 0 2.187-1.392l3.287-3.328Z"/>
+                        <circle cx="31.383" cy="26.116" r="3.266"/>
+                    </g>
+                    <g fill="none" stroke="#ffffff" stroke-linecap="round" stroke-width="2">
+                        <path stroke-miterlimit="10" d="M46.327 15.263v-4.175"/>
+                        <path stroke-linejoin="round" d="M42.173 31.546V18.423m20.741.012v13.111M40.193 19.839l12.308-9.275l12.393 9.275"/>
+                        <path stroke-linejoin="round" d="M46.954 31.216v-8.571l5.582-4.311l5.597 4.311v8.571m-22.899 8.356h-5.298l-4.647-5.332m-.246-3.996s-5.785 1.354-7.088 2.287c-1.664 1.192-5.674 7.162-5.674 7.162m3.834 6.297l-2.229 3.37l-6.331 3.07a1.42 1.42 0 0 0-.836 1.742a1.236 1.236 0 0 0 1.602.818l6.035-1.85a5.372 5.372 0 0 0 2.187-1.392l5.112-5.175"/>
+                        <path stroke-linejoin="round" d="M25.267 39.441v2.214l4.16 5.124a6.622 6.622 0 0 1 .756 2.705l.406 9.151c.086 1.78-.824 2.72-1.736 2.72c-.97 0-1.72-.912-1.884-2.631l-1.053-8.66L19 44.172a3.216 3.216 0 0 1-1.113-2.366a5.417 5.417 0 0 1 .765-2.581l3.293-5.947c1.141-2.281 2.256-3.091 3.762-3.091a2.714 2.714 0 0 1 2.68 2.767m-.27-6.838a3.266 3.266 0 1 1 3.266 3.266"/>
+                    </g>
+                </svg>
+                <p>go home</p>
+            </div>
+            <div class="page-button" onclick="fetchStickyNotes('up')" id="next-page-button">
+                <svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 24 24">
+                    <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m15 11l3 2m0-8a1 1 0 1 0 0-2a1 1 0 0 0 0 2ZM9.5 9.5L9.525 6H15L8 17H4m11-9l-3 5l.5 1L17 7.5L15 6m-4 7l5 3.5v5"/>
+                </svg>
+                <p>forward</p>
+            </div>
+
+        </div>
+        
+
+    </div>
+
+
+    <script>
+
+        function fetchStickyNotes(direction ) {
+            var csrftoken = '{{ csrf_token }}';
+
+            var note_list = document.getElementsByClassName('sticky-notes-container')[0].getElementsByClassName('sticky-note');
+
+            // reverse because the reading is the upper Id to lower id
+            if (direction === "down"){
+                var startId = note_list[0].getAttribute('note_id');
+                console.log(`Start ID : ${startId}`);
+                //if ( parseInt(startId , 10) <= 1 ){
+                //    startId = 1;
+                //}
+            } else {
+                //console.log(note_list.length);
+                //if (note_list.length <= 1 ){
+                //    startId = note_list[0].getAttribute('note_id');
+                //    console.log("up 1");
+                //    console.log(note_list[0]);
+                //    console.log(startId);
+                //} else{
+                //    startId = note_list[note_list.length - 1].getAttribute('note_id');
+                //    console.log("up 2");
+                //}
+                if (1 < note_list.length){
+                    var startId = note_list[note_list.length - 1].getAttribute('note_id');
+                } else {
+                    var startId = note_list[0].getAttribute('note_id');
+                }
+            }
+
+            //var startId = (direction === "down" ? note_list[0] : note_list[note_list.length - 1]).getAttribute('note_id'); 
+
+            $.ajax({
+                type: 'POST',
+                url: '/sticky notes/',
+                headers: { 'X-CSRFToken': csrftoken },
+                data: {
+                    'direction': direction,
+                    'start_id': startId
+                },
+                success: function(response) {
+                    if (response.sticky_notes) {
+                        var notesList = $('.sticky-notes-container');
+
+                        // Removing a function on the buttons in next page and previus page
+                        if (response.isDatabaseHasData){
+                            const nextPageBut = document.getElementById('next-page-button');
+                            if (!nextPageBut.onclick){
+                                nextPageBut.setAttribute('onclick' , "fetchStickyNotes('up')");
+                                nextPageBut.style.opacity = 1;
+                            }
+                            const prevPageBut = document.getElementById('prev-page-button');
+                            if (!prevPageBut.onclick){
+                                prevPageBut.setAttribute('onclick' , "fetchStickyNotes('down')");
+                                prevPageBut.style.opacity = 1;
+                            }
+                            
+                        } else {
+                            if (direction == "up" ){
+                                const nextPageBut = document.getElementById('next-page-button');
+                                if (nextPageBut.onclick){
+                                    nextPageBut.onclick = null;
+                                    nextPageBut.style.opacity = 0;
+                                }
+                            } else {
+                                const prevPageBut = document.getElementById('prev-page-button');
+                                if (prevPageBut.onclick){
+                                    prevPageBut.onclick = null;
+                                    prevPageBut.style.opacity = 0;
+                                }
+                            }
+                        } 
+
+                        if (response.sticky_notes.length > 0){
+                            notesList.empty(); // Clear current list
+                            response.sticky_notes.forEach(function(note) {
+                                notesList.append(
+                                    `
+                                    <div class="sticky-note" note_id="${note.note_id}">
+            
+                                        <div class="note-header">
+                                            <p class="nickname" style="color: ${note.nickname_color}; font-family: ${note.nickname_font}">${note.nickname}</p>
+                                            <p class="emoji"> ${note.emoji}</p>
+                                            <span class="pin"></span>
+                                        </div>
+                    
+                                        <div class="sticky-note-content">
+                                            <p style="color:${ note.content_color }; font-family: ${ note.content_font }">${ note.content }</p>
+                                        </div>
+                                    </div>
+                                    `
+                                );
+                            });
+
+                            
+                            const pageNum = document.getElementById("page-number");
+                            if (direction == "down"){
+                                pageNum.innerHTML = `${parseInt(pageNum.innerHTML, 10 ) - 1}`;
+                            } else {
+                                pageNum.innerHTML = `${parseInt(pageNum.innerHTML, 10 ) + 1}`;
+                            }
+                        }
+
+
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error fetching sticky notes:', error);
+                }
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+
+            // Remove any buttons if no sticky notes display
+            var note_list = document.getElementsByClassName('sticky-notes-container')[0].getElementsByClassName('sticky-note');
+            if (note_list.length < 1){
+                const nextPageBut = document.getElementById('next-page-button');
+                if (nextPageBut.onclick){
+                    nextPageBut.onclick = null;
+                    nextPageBut.style.opacity = 0;
+                }
+                const prevPageBut = document.getElementById('prev-page-button');
+                if (prevPageBut.onclick){
+                    prevPageBut.onclick = null;
+                    prevPageBut.style.opacity = 0;
+                }
+            }
+
+
+            // Function to get the current date in Month Day, Year format
+            function getCurrentDateFormatted() {
+                const date = new Date();
+                const monthNames = [
+                    "January", "February", "March", "April", "May", "June",
+                    "July", "August", "September", "October", "November", "December"
+                ];
+                const month = monthNames[date.getMonth()];
+                const day = date.getDate();
+                const year = date.getFullYear();
+                return `${month} ${day}, ${year}`;
+            }
+
+            // Get the current date and display it in the p tag
+            const currentDateElement = document.getElementById('currentDate');
+            currentDateElement.textContent = getCurrentDateFormatted();
+
+
+
+        });
+
+        function changeTemplate(url) {
+            window.location.href = url;
+        }
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,336 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link rel="stylesheet" href="{% static 'css\write_notes_screens_design.css' %}">
+    <script defer scr="{% static 'script\sticky_notes_wall.js' %}"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poetsen+One&display=swap" rel="stylesheet">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poetsen+One&family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
+
+    {% comment %} users fonts may use {% endcomment %}
+    <link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap" rel="stylesheet">
+
+
+</head>
+<body>
+
+    <div class="tool-bar">
+        <div class="tool" onclick="changeTemplate('{% url 'home' %}');">
+            <svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 50 50">
+                <g fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+                    <path stroke="#FFFFFF" d="M35.417 14.583v18.75a2.083 2.083 0 0 1-2.084 2.084h-25a2.083 2.083 0 0 1-2.083-2.084v-18.75A2.083 2.083 0 0 1 8.333 12.5h25"/>
+                    <path stroke="#FFFFFF" d="M10.417 43.75h31.25a2.083 2.083 0 0 0 2.083-2.083V20.833"/>
+                    <path stroke="#FFFFFF" d="m34.563 13.354l-5.396 5.396m12.5-8.333a4.167 4.167 0 1 0-8.334 0v0a4.167 4.167 0 1 0 8.334 0"/>
+                </g>
+            </svg>
+            <p>Oc's Notes</p>
+        </div>
+        <div class="tool">
+            <svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 16 16">
+                <path fill="currentColor" d="M11.726 2.56a1.914 1.914 0 1 1 2.707 2.708l-2.64 2.64a2.5 2.5 0 0 1-1.06.63l-1.466.432a1 1 0 0 1-1.242-1.24l.43-1.467A2.5 2.5 0 0 1 9.087 5.2zm2 .708a.914.914 0 0 0-1.293 0l-2.64 2.639a1.5 1.5 0 0 0-.378.638l-.43 1.466l1.464-.432c.24-.071.46-.201.636-.378l2.64-2.64a.914.914 0 0 0 0-1.293M9.872 3H3.5A2.5 2.5 0 0 0 1 5.5v5A2.5 2.5 0 0 0 3.5 13h9a2.5 2.5 0 0 0 2.5-2.5V6.115l-1 1V10.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 10.5V7.272c.555-.453 1.19-.864 1.749-1.071c.31-.116.557-.153.735-.132c.157.019.265.08.35.208c.126.189.126.34.045.537c-.098.24-.3.497-.573.83l-.034.043c-.243.295-.538.655-.716 1.043c-.201.436-.275.95-.003 1.494c.42.842 1.368.932 2.115.788a4.429 4.429 0 0 0 2.186-1.158a.5.5 0 1 0-.708-.708c-.428.429-1.08.77-1.668.884c-.62.12-.924-.04-1.03-.254c-.104-.206-.093-.392.016-.628c.122-.266.342-.535.616-.87l.01-.012c.248-.302.551-.673.715-1.073c.184-.45.201-.96-.139-1.47a1.444 1.444 0 0 0-1.065-.647c-.397-.047-.814.044-1.2.187c-.469.174-.952.448-1.401.758V5.5A1.5 1.5 0 0 1 3.5 4h5.372z"/>
+            </svg>
+            <p>Write Notes</p>
+        </div>
+        <div class="tool" onclick="changeTemplate('{% url 'suggestion' %}');">
+            <svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 20 20">
+                <path fill="currentColor" d="M8.5 4.498a1.5 1.5 0 1 1 3 0a1.5 1.5 0 0 1-3 0m1.5-2.5a2.5 2.5 0 0 0-2.43 3.086L5.471 4.15a1.76 1.76 0 0 0-2.317.88c-.4.882-.007 1.917.877 2.31L7 8.662v2.287l-1.877 4.645a1.75 1.75 0 0 0 3.246 1.311l.085-.213a5.5 5.5 0 0 1-.424-1.618l-.589 1.457a.75.75 0 1 1-1.39-.562l1.876-4.645A1 1 0 0 0 8 10.949V8.662a1 1 0 0 0-.593-.914L4.439 6.427a.74.74 0 0 1-.374-.983a.76.76 0 0 1 1-.38l3.918 1.744a2.5 2.5 0 0 0 2.034 0l3.918-1.744a.76.76 0 0 1 1 .38a.74.74 0 0 1-.373.983l-2.969 1.321a1 1 0 0 0-.593.914v.545a5.5 5.5 0 0 1 1-.185v-.36l2.968-1.322a1.74 1.74 0 0 0 .878-2.31a1.76 1.76 0 0 0-2.318-.88l-2.097.934q.069-.282.07-.586a2.5 2.5 0 0 0-2.5-2.5M18 14.5a4.5 4.5 0 1 1-9 0a4.5 4.5 0 0 1 9 0m-4.5 1.88a.625.625 0 1 0 0 1.25a.625.625 0 0 0 0-1.25m0-4.877c-1.048 0-1.864.818-1.853 1.955a.5.5 0 1 0 1-.01c-.006-.579.36-.945.853-.945c.473 0 .854.392.854.95c0 .202-.072.315-.36.544l-.278.215c-.506.404-.716.717-.716 1.288a.5.5 0 0 0 .992.09l.011-.156c.017-.148.1-.254.346-.448l.277-.215c.513-.41.728-.732.728-1.318c0-1.104-.823-1.95-1.854-1.95"/>
+            </svg>
+            <p>Suggestions</p>
+        </div>
+
+    </div>
+
+    <div class="container">
+
+        <div class="header-bar">
+            <div class="header-left">        
+                <h1 class="app_name">OC Notes</h1>
+                <h4 class="current_day" id="currentDate"></h4>
+            </div>
+        </div>
+
+
+        <div class="form-preview">
+
+            <div class="form-note">
+                <h2>Notes</h2>
+                <div>
+                    
+                    <div class="name-input">
+                        <label for="nickname">Nickname :</label>
+                        <input type="text" id="nickname" oninput="updateNickname()" maxlength="13" placeholder="13 letters only" required/>
+                    </div>
+                    <div class="text-colors">
+                        <button onclick="changeNicknameColor('black')">Black</button>
+                        <button onclick="changeNicknameColor('red')">Red</button>
+                        <button onclick="changeNicknameColor('blue')">Blue</button>
+                    </div>
+
+                    <div class="sticky-notes-fonts-container">
+                        <div class="sticky-notes-fonts">
+                            <button onclick="changeNicknameFont('--comic-san')">Comic</button>
+                            <button onclick="changeNicknameFont('--arial-rounded')">Arial</button>
+                            <button onclick="changeNicknameFont('--lucida-writing')">Lucida</button>
+                            <button onclick="changeNicknameFont('--bradley-hand')">Bradley</button>
+                            <button onclick="changeNicknameFont('--chalkboard-se')">Chalkboard</button>
+                            <button onclick="changeNicknameFont('--permanent-marker')">Permanent</button>
+                            <button onclick="changeNicknameFont('--indie-flower')">Flower</button>
+                            <button onclick="changeNicknameFont('--dakota')">Dakota</button>
+                            <button onclick="changeNicknameFont('--primary-font ')">Poetsen</button>
+                            <button onclick="changeNicknameFont('--secondary-font')">Quicksand</button>
+                        </div>
+                    </div>
+                    
+                    <div class="content-input">
+                        <label for="content">Content :</label>
+                        <textarea id="content" rows="4" cols="50" oninput="updateContent()" maxlength="155" placeholder="155 letters only can be put inside"></textarea>
+                    </div>
+                    <div class="text-colors text-colors-textarea">
+                        <button onclick="changeContentColor('black')">Black</button>
+                        <button onclick="changeContentColor('red')">Red</button>
+                        <button onclick="changeContentColor('blue')">Blue</button>
+                    </div>
+
+                    <div class="sticky-notes-fonts-container">
+                        <div class="sticky-notes-fonts">
+                            <button onclick="changeContentFont('--comic-san')">Comic</button>
+                            <button onclick="changeContentFont('--arial-rounded')">Arial</button>
+                            <button onclick="changeContentFont('--lucida-writing')">Lucida</button>
+                            <button onclick="changeContentFont('--bradley-hand')">Bradley</button>
+                            <button onclick="changeContentFont('--chalkboard-se')">Chalkboard</button>
+                            <button onclick="changeContentFont('--permanent-marker')">Permanent</button>
+                            <button onclick="changeContentFont('--indie-flower')">Flower</button>
+                            <button onclick="changeContentFont('--dakota')">Dakota</button>
+                            <button onclick="changeContentFont('--primary-font')">Poetsen</button>
+                            <button onclick="changeContentFont('--secondary-font')">Quicksand</button>
+                        </div>
+                    </div>
+
+                    <div class="content-input">
+                        <label >Emoji :</label>
+                    </div>
+
+                    <div class="emoji-list">
+                        <button onclick="changeEmoji('🥰')">🥰</button>
+                        <button onclick="changeEmoji('😂')">😂</button>
+                        <button onclick="changeEmoji('😏')">😏</button>
+                        <button onclick="changeEmoji('🤪')">🤪</button>
+                        <button onclick="changeEmoji('😑')">😑</button>
+                        <button onclick="changeEmoji('😴')">😴</button>
+                        <button onclick="changeEmoji('😢')">😢</button>
+                        <button onclick="changeEmoji('😡')">😡</button>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="preview-note">
+
+                <h2>Preview</h2>
+
+                <div class="sticky-note">
+
+                    <div class="note-header">
+                        <p class="nickname" nickname_color="black" nickname_font="--primary-font">Makietech</p>
+                        <p class="emoji">🥰</p>
+                        <span class="pin"></span>
+                    </div>
+
+                    <div class="sticky-note-content">
+                        <p nickname_color="black" nickname_font="--secondary-font">
+                            Sana magustuhan nyu ang ginawa namin at ilabas nyu ang tunay nyu nararamdaman na hindi kayo makikilala at makapagbibigay ng gaan sa inyung nararamdaman.
+                        </p>
+                    </div>
+    
+                </div>
+
+                <div class="preview-buttons">
+                    <div onclick="saveUserNotes()">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 32 32">
+                            <path fill="currentColor" d="M15 3c-1.258 0-2.152.89-2.594 2H5v23h8v2h14V14h-2V5h-7.406C17.152 3.89 16.258 3 15 3zm0 2c.555 0 1 .445 1 1v1h3v2h-8V7h3V6c0-.555.445-1 1-1zM7 7h2v4h12V7h2v7H13v12H7zm8 9h10v12H15z"/>
+                        </svg>
+                        <p>Paste It!</p>
+                    </div>
+                    <div onclick="clearAll()">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 48 48">
+                            <g fill="none" stroke="currentColor">
+                                <path stroke-linejoin="round" stroke-width="4.302" d="M44.782 24.17L31.918 7.1L14.135 20.5L27.5 37l3.356-2.336L44.782 24.17Z"/>
+                                <path stroke-linejoin="round" stroke-width="4.302" d="m27.5 37l-3.839 3.075l-10.563-.001l-2.6-3.45l-6.433-8.536L14.5 20.225"/>
+                                <path stroke-linecap="round" stroke-width="4.5" d="M13.206 40.072h31.36"/>
+                            </g>
+                        </svg>
+                        <p>Rewrite!</p>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+
+    </div>
+    
+
+    
+    <script>
+        function saveUserNotes() {
+            // Get the form value
+            var nickname = document.getElementById('nickname').value;
+            var content = document.getElementById('content').value;
+            
+            if (!nickname || !content){
+                alert('Please Fill Up Your Notes!');
+                return;
+            }
+            // Get Embedded attributes
+            const emoji = document.getElementsByClassName('emoji')[0].textContent;
+            const nickname_color = document.getElementsByClassName('nickname')[0].getAttribute('nickname_color');
+            const nickname_font = document.getElementsByClassName('nickname')[0].getAttribute('nickname_font');
+
+            const sticky_content_parent = document.getElementsByClassName('sticky-note-content')[0];
+            const content_color = sticky_content_parent.getElementsByTagName('p')[0].getAttribute('content_color');
+            const content_font = sticky_content_parent.getElementsByTagName('p')[0].getAttribute('content_color');
+
+            var csrftoken = '{{ csrf_token }}';
+
+            $.ajax({
+                type: 'POST',
+                url: '/writes/',
+                headers: { 'X-CSRFToken': csrftoken },
+                data: {
+                    'nickname': nickname,
+                    'nickname_color' : nickname_color,
+                    'nickname_font' : nickname_font,
+                    'content': content,
+                    'content_color' : content_color,
+                    'content_font' : content_font,
+                    'emoji' : emoji
+                },
+                success: function(response) {
+                    alert('User suggestion saved successfully!');
+                    changeTemplate('{% url 'home' %}');
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error saving user suggestion:', error);
+                }
+            });
+
+
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Function to get the current date in Month Day, Year format
+            function getCurrentDateFormatted() {
+                const date = new Date();
+                const monthNames = [
+                    "January", "February", "March", "April", "May", "June",
+                    "July", "August", "September", "October", "November", "December"
+                ];
+                const month = monthNames[date.getMonth()];
+                const day = date.getDate();
+                const year = date.getFullYear();
+                return `${month} ${day}, ${year}`;
+            }
+
+            // Get the current date and display it in the p tag
+            const currentDateElement = document.getElementById('currentDate');
+            currentDateElement.textContent = getCurrentDateFormatted();
+        });
+
+        function validateInput(input) {
+            const regex = /^[ -~]*$/; // Regular expression to match ASCII characters
+            if (!regex.test(input.value)) {
+                // If input contains non-ASCII characters, remove them
+                input.value = input.value.replace(/[^\x20-\x7E]/g, '');
+            }
+        }
+
+        function changeTemplate(url) {
+            window.location.href = url;
+        };
+
+        function changeNicknameColor(selected_color){
+            const sticky_nickname = document.getElementsByClassName('nickname')[0];
+            sticky_nickname.style.color = selected_color;
+            sticky_nickname.setAttribute('nickname_color' , selected_color);
+        };
+
+        function updateNickname(){
+            
+            var form_nickname = document.getElementById('nickname');
+            validateInput(form_nickname);
+
+            const sticky_nickname = document.getElementsByClassName('nickname')[0];
+            sticky_nickname.textContent = form_nickname.value;
+        }
+
+        function changeNicknameFont(font_used){
+            const selected_font = getComputedStyle(document.documentElement).getPropertyValue(font_used);
+            const sticky_nickname = document.getElementsByClassName('nickname')[0];
+            sticky_nickname.style.fontFamily = selected_font;
+            sticky_nickname.setAttribute('nickname_font', font_used);
+        }
+
+        function updateContent(){
+            
+            var form_content = document.getElementById('content');
+            validateInput(form_content);
+
+            const sticky_content_parent = document.getElementsByClassName('sticky-note-content')[0]
+            const content = sticky_content_parent.getElementsByTagName('p')[0];
+            content.textContent = form_content.value;
+        }
+
+        function changeContentFont(font_used){
+            const selected_font = getComputedStyle(document.documentElement).getPropertyValue(font_used);
+            const sticky_content_parent = document.getElementsByClassName('sticky-note-content')[0]
+            const content = sticky_content_parent.getElementsByTagName('p')[0];
+            content.style.fontFamily = selected_font;
+            content.setAttribute('content_font' , font_used);
+        }
+
+        function changeContentColor(selected_color){
+            const sticky_content_parent = document.getElementsByClassName('sticky-note-content')[0]
+            const content = sticky_content_parent.getElementsByTagName('p')[0];
+            content.style.color = selected_color;
+            content.setAttribute('content_color', selected_color);
+        };
+
+        function changeEmoji(emoji){
+            const preview_emoji = document.getElementsByClassName('emoji')[0];
+            preview_emoji.textContent = emoji;
+        }
+
+        function clearAll(){
+            const preview_emoji = document.getElementsByClassName('emoji')[0];
+            preview_emoji.textContent = '🥰';
+
+            const sticky_content_parent = document.getElementsByClassName('sticky-note-content')[0]
+            const content = sticky_content_parent.getElementsByTagName('p')[0];
+            content.textContent = '';
+
+            const sticky_nickname = document.getElementsByClassName('nickname')[0];
+            sticky_nickname.textContent = "";
+
+            
+            document.getElementById('nickname').value = "";
+            document.getElementById('content').value = "";
+        }
+
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,304 @@
+.poetsen-one-regular {
+    font-family: "Poetsen One", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.quicksand-light {
+    font-family: "Quicksand", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 300;
+    font-style: normal;
+}
+
+:root{
+    --primary-color : #791717;
+    --secondary-color : #B76767;
+    --tertiary-color: #FFFFFF;
+    --primary-font : "Poetsen One";
+    --secondary-font : "Quicksand";
+
+    --comic-san : "Comic Sans MS", "Comic Sans", cursive;
+    --arial-rounded : 'Arial Rounded MT Bold', Arial, sans-serif;
+    --lucida-writing : 'Lucida Handwriting', cursive;
+    --bradley-hand : 'Bradley Hand', cursive;
+    --chalkboard-se : 'Chalkboard SE', sans-serif;
+    --dakota : 'Dakota', cursive;
+    --permanent-marker : 'Permanent Marker', cursive;
+    --indie-flower : 'Indie Flower', cursive;
+}
+
+
+* {
+    color: var(--tertiary-color);
+    margin: 0;
+}
+
+body{
+    background-color: var(--primary-color);
+    margin: 0;
+    padding-bottom: 13.0svh;
+}
+
+.tool-bar{
+    z-index: 5;
+    position: fixed;
+    bottom: 0;
+    display: flex;
+    width: 100%;
+    background-color: var(--secondary-color);
+    justify-content: space-around;
+    height: 8.5svh;
+    box-shadow: 0.0svh -0.5svh 1.0svh rgba(0,0,0,0.2);
+    padding-bottom: 0.5svh;
+}
+
+.tool{
+    width: fit-content;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    /* background-color: rebeccapurple; */
+    margin-top: 1.0svh;
+    opacity: 0.5;
+    cursor: pointer;
+}
+
+.tool svg{
+    flex : 1;
+    height: 4.0svh;
+    width: 4.0svh;
+}
+
+.tool p{
+    flex: 0;
+    font-family: var(--secondary-font);
+    color: var(--tertiary-color);
+}
+
+.tool:nth-child(3){
+    opacity: 1;
+}
+
+.header-bar{
+    display: flex;
+    flex-direction: row;
+    margin-top: 7.0svh;
+    justify-content: space-between;
+    padding-bottom: 8.0svh;
+}
+
+.header-left{
+    display: flex;
+    flex-direction: column  ;
+    width: 200px;
+    /* background-color: rebeccapurple; */
+    align-items: center ;
+    height: fit-content;
+}
+
+.app_name{
+    font-size: 5.0svh;
+    width: fit-content;
+    font-family:  var(--primary-font);
+}
+
+.current_day{
+    margin-top: 0.3svh;
+    width: fit-content;
+    font-style: italic;
+    font-weight: var(--secondary-font);
+    font-size: 2.0svh;
+}
+
+
+.suggestion-form-container{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 10.0svh;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+
+.suggestion-form{
+    display: flex;
+    flex-direction: column;
+    height: fit-content;
+}
+
+.suggestion-form h2{
+    font-family: var(--primary-font);
+    padding-bottom: 3.0svh;
+}
+
+.suggestion-form label{
+    font-family: var(--primary-font);
+    padding-bottom: 3.0svh;
+    width: 100px;
+}
+
+.suggestion-form input[type="text"]:not(button){
+    font-size: 2.0svh;
+    border-radius: 0.5svh;
+    line-height: 1.5;
+    padding: 0.5svh;
+    border: 0.5svh solid #dee1e2;
+    color: rgb(14, 14, 16);
+    background: #dee1e2;
+    display: block;
+    height: 2.0svh;
+    margin-left: 1.5svh;
+    width: 150px;
+    font-family: var(--secondary-font);
+}
+
+.suggestion-form textarea{
+    font-size: 2.0svh;
+    border-radius: 0.5svh;
+    line-height: 1.5;
+    padding: 0.5svh;
+    border: 0.5svh solid #dee1e2;
+    color: rgb(14, 14, 16);
+    background: #dee1e2;
+    display: block;
+    height: 16.0svh;
+    margin-left: 1.5svh;
+    width: 250px;
+    font-family: var(--secondary-font);
+}
+
+.suggestion-form textarea{
+    font-size: 2.0svh;
+    border-radius: 0.5svh;
+    line-height: 1.5;
+    padding: 0.5svh;
+    border: 0.5svh solid #dee1e2;
+    color: rgb(14, 14, 16);
+    background: #dee1e2;
+    display: block;
+    height: 16.0svh;
+    margin-left: 1.5svh;
+    width: 250px;
+    font-family: var(--secondary-font);
+}
+
+.text-colors-textarea{
+    margin-top: 1.2svh;
+}
+
+
+.name-input{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.name-input label{
+    text-align: center;
+    height: 2.0svh;
+    font-size: 2.5svh;
+    align-self: center;
+}
+
+.content-input{
+    display: flex;
+    flex-direction: column;
+    margin-top: 3.0svh;
+}
+
+
+.regulations{
+    background-color: var(--secondary-color);
+    display: flex;
+    flex-direction: column;
+    width: 270px;
+    margin-top: 3.0svh;
+    gap: 1.0svh;
+    padding: 1.0svh;
+    border-radius: 1.0svh;
+}
+
+.regulations h3{
+    font-family: var(--primary-font);
+    color: var(--primary-color);
+}
+
+.regulations p{
+    word-wrap: break-word;
+    font-family: var(--secondary-font);
+    color: var(--tertiary-color);
+    text-indent: 2.0svh;
+    margin: 0 1.0svh;
+    margin-bottom: 2.0svh;
+    letter-spacing: 0.1svh;
+}
+
+.regulations div{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 1.0svh;
+    cursor: pointer;
+    margin-bottom: 1.0svh;
+    background-color: var(--primary-color);
+    border-radius: 1.0svh;
+    padding: 1.0svh 0;
+    font-family: var(--primary-font);
+}
+
+.regulations div svg{
+    margin-left: 1.0svh;
+    width: 6.0svh;
+    height:5.0svh;
+}
+
+.regulations div a{
+    font-size: 2.0svh;
+    text-decoration: none;
+}
+
+
+
+.preview-buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-top: 6.0svh;
+    gap: 10.0svh;
+}
+
+.preview-buttons div{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: fit-content;
+    height: fit-content;
+    background-color: var(--secondary-color);
+    padding: 1.0svh;
+    text-align: center;
+    gap: 1.0svh;
+    border-radius: 1.0svh;
+    align-items: center;
+    cursor: pointer;
+}
+
+.preview-buttons div svg{
+    width: 4.0svh;
+    height: 4.0svh;
+    flex: 1;
+}
+
+.preview-buttons div p{
+    flex: 0;
+    font-family: var(--secondary-font);
+}
+
+.preview-buttons div:nth-child(1){
+    transform: rotate(-5deg);
+}
+
+.preview-buttons div:nth-child(2){
+    transform: rotate(5deg);
+}
