@@ -87,20 +87,16 @@
                 </div>
 
                 <script>
-                    //changeNicknameFont({{note.nickname_font}}, `nickname-${note.id}`);
-                    //changeContentFont( {{note.content_font}}, `content-${note.id}`);
-                    
                     function onetimeChange(){
                         const selected_font = getComputedStyle(document.documentElement).getPropertyValue('{{note.nickname_font}}');
                         const sticky_nickname = document.getElementById('nickname-{{note.id}}');
                         sticky_nickname.style.fontFamily = selected_font;
-                        console.log(` {{note.nickname_font}} change success`);
                         
                         const selected_content_font = getComputedStyle(document.documentElement).getPropertyValue('{{note.content_font}}');
                         const sticky_content_parent = document.getElementById('content-{{note.id}}')
                         const content = sticky_content_parent.getElementsByTagName('p')[0];
                         content.style.fontFamily = selected_content_font;
-                        console.log(`{{note.content_font}} change success`);
+                        console.log(content);
                     }
 
                     onetimeChange();
@@ -151,21 +147,15 @@
 
     <script>
 
-        function changeNicknameFont(font_used , note_id){
-            const selected_font = getComputedStyle(document.documentElement).getPropertyValue(font_used);
-            const sticky_nickname = document.getElementById(note_id);
+        function onetimeChangeOnTheMainScript(nickname_font, content_font, note_id) {
+            const selected_font = getComputedStyle(document.documentElement).getPropertyValue(nickname_font);
+            const sticky_nickname = document.getElementById(`nickname-${note_id}`);
             sticky_nickname.style.fontFamily = selected_font;
-            sticky_nickname.setAttribute('nickname_font', font_used);
-            console.log(`${note_id} change success`);
-        }
-
-        function changeContentFont(font_used, note_id){
-            const selected_font = getComputedStyle(document.documentElement).getPropertyValue(font_used);
-            const sticky_content_parent = document.getElementById(note_id)
+            const selected_content_font = getComputedStyle(document.documentElement).getPropertyValue(content_font);
+            const sticky_content_parent = document.getElementById(`content-${note_id}`)
             const content = sticky_content_parent.getElementsByTagName('p')[0];
-            content.style.fontFamily = selected_font;
-            content.setAttribute('content_font' , font_used);
-            console.log(`${note_id} change success`);
+            content.style.fontFamily = selected_content_font;
+
         }
 
         function fetchStickyNotes(direction ) {
@@ -176,21 +166,10 @@
             // reverse because the reading is the upper Id to lower id
             if (direction === "down"){
                 var startId = note_list[0].getAttribute('note_id');
-                console.log(`Start ID : ${startId}`);
                 //if ( parseInt(startId , 10) <= 1 ){
                 //    startId = 1;
                 //}
             } else {
-                //console.log(note_list.length);
-                //if (note_list.length <= 1 ){
-                //    startId = note_list[0].getAttribute('note_id');
-                //    console.log("up 1");
-                //    console.log(note_list[0]);
-                //    console.log(startId);
-                //} else{
-                //    startId = note_list[note_list.length - 1].getAttribute('note_id');
-                //    console.log("up 2");
-                //}
                 if (1 < note_list.length){
                     var startId = note_list[note_list.length - 1].getAttribute('note_id');
                 } else {
@@ -198,11 +177,10 @@
                 }
             }
 
-            //var startId = (direction === "down" ? note_list[0] : note_list[note_list.length - 1]).getAttribute('note_id'); 
 
             $.ajax({
                 type: 'POST',
-                url: '/sticky notes/',
+                url: '/stickynotes/',
                 headers: { 'X-CSRFToken': csrftoken },
                 data: {
                     'direction': direction,
@@ -244,22 +222,23 @@
                         if (response.sticky_notes.length > 0){
                             notesList.empty(); // Clear current list
                             response.sticky_notes.forEach(function(note) {
+                                
                                 notesList.append(
-                                    `
-                                    <div class="sticky-note" note_id="${note.note_id}">
-            
+                                    `<div class="sticky-note" note_id="${ note.note_id }" >
+        
                                         <div class="note-header">
-                                            <p class="nickname" style="color: ${note.nickname_color}; font-family: ${note.nickname_font}">${note.nickname}</p>
-                                            <p class="emoji"> ${note.emoji}</p>
+                                            <p class="nickname" id="nickname-${note.note_id}" style="color: ${note.nickname_color};" >${ note.nickname }</p>
+                                            <p class="emoji">${ note.emoji }</p>
                                             <span class="pin"></span>
                                         </div>
                     
-                                        <div class="sticky-note-content">
-                                            <p style="color:${ note.content_color }; font-family: ${ note.content_font }">${ note.content }</p>
+                                        <div class="sticky-note-content" id="content-${note.note_id}">
+                                            <p style="color:${ note.content_color }; ">${ note.content }</p>
                                         </div>
                                     </div>
                                     `
                                 );
+                                onetimeChangeOnTheMainScript(`${note.nickname_font}`, `${note.content_font}`, `${note.note_id}`);
                             });
 
                             
