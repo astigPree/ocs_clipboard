@@ -1,13 +1,51 @@
 
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
-from django.contrib.auth.decorators import login_required
 
 from django.shortcuts import render
 from .models import StickyNote, UserSuggestion
 
+from html.parser import HTMLParser
 
-NUMBER_OF_NOTES_TO_DISPLAY = 3
+
+NUMBER_OF_NOTES_TO_DISPLAY = 20
+BAD_WORDS = (
+    'puta', 'pota', 'tangina', 'gago' , 'bobo' , 'bubo' , 'bubu' , 'bobu' , 'gaga', 'patay', 'matay', 'natay', 'amp', 'nigga', 'yawa',
+    'pisot' , 'bayag', 'buto', 'totoy', 'boto', 'letche', 'itot', 'lolo' , 'salsal', 'jabol', 'pusli', 'shabu', 'whana', 'bilat', 'belat',
+    'puke', 'sex' , 'porn', 'dudu', 'dede', 'putay', 'kupal', 'kopal', 'bolbol', 'kantu', 'kasta', 'torjack', 'pisti', 'peste' , 'piste', 'pesti',
+    'kant', 'yatis', 'ngina','shuta','nigger','negro','pampam','whore','slut','gagi','shole','hoe','shit','fuck','bitch','ock','uss',
+    'cunt','shat','shite','jaku','kanor','jako',
+)
+
+
+class MyHTMLParser(HTMLParser):
+    def __init__(self):
+        super().__init__()
+        self.contains_html = False
+
+    def handle_starttag(self, tag, attrs):
+        self.contains_html = True
+        
+def willMakeAHTMLObject(text: str) -> bool:
+    parser = MyHTMLParser()
+    parser.feed(text)
+    print(parser.contains_html)
+    return parser.contains_html
+
+def isBadWords(sentence : str, word : str) -> bool:
+    hasBadWord = sentence.lower().find(word)
+    return True if hasBadWord > -1 else False
+
+def updateSentence(sentence, start , end) -> str:
+    for i in range(start , end + 1):
+        sentence[i] = '*'
+    return sentence
+
+def hasBadWord(sentence : str) -> bool:
+    for word in BAD_WORDS:
+        if isBadWords(sentence , word):
+            return True
+    return False
 
 # Create your views here.
 
@@ -33,9 +71,6 @@ def get_decremental_sticky_notes(start_id, count):
     sticky_notes.reverse()
     return sticky_notes
 
-
-
-@login_required
 def sticky_notes_view(request):
     if request.method == 'POST':
         direction = request.POST.get('direction')
@@ -64,6 +99,7 @@ def sticky_notes_view(request):
             }
             for note in sticky_notes
         ]
+        
         return JsonResponse(
             {
                 'sticky_notes': notes_data ,
@@ -74,14 +110,14 @@ def sticky_notes_view(request):
         # If it's not a POST request, you can return an empty response or handle it accordingly
         return JsonResponse({'error': 'Invalid request method'}, status=405)
 
-
 def clipboard_list_page(request):
+    print(isBadWords("Hello ako po ito is max" , 'mox'))
+    
     if request.method == "GET":
         notes = sticky_notes = StickyNote.objects.all().order_by('-id')[:NUMBER_OF_NOTES_TO_DISPLAY]
         previous_page(12)
         context = {"notes" : notes }
         return render(request , 'clipboards_screens.html' , context=context)
-
 
 @csrf_exempt
 def write_notes(request):
@@ -94,18 +130,33 @@ def write_notes(request):
         content_font = request.POST.get('content_font')
         emoji = request.POST.get('emoji')
         
-        sticky_note = StickyNote(
-            nickname=nickname, nickname_color=nickname_color, nickname_font=nickname_font,
-            content=content, content_color=content_color, content_font=content_font,
-            emoji=emoji
-            )
-        sticky_note.save()
-        return JsonResponse({'message': 'User Notes saved successfully!'})
+        nicknameHasBadWord = hasBadWord(nickname)
+        contentHasBadWord = hasBadWord(content)
+        nicknameCanbeHTML = willMakeAHTMLObject(nickname)
+        contentCanbeHTML = willMakeAHTMLObject(content)
+        
+        hasOwnerNickname = True if (nickname.find('Makietech') > -1) else False
+                
+        
+        if not nicknameHasBadWord and not contentHasBadWord and not hasOwnerNickname and not nicknameCanbeHTML and not contentCanbeHTML:
+            #nickname = 'Makietech' if hasOwnerNickname else nickname
+            sticky_note = StickyNote(
+                nickname=nickname, nickname_color=nickname_color, nickname_font=nickname_font,
+                content=content, content_color=content_color, content_font=content_font,
+                emoji=emoji
+                )
+            sticky_note.save()
+            
+        return JsonResponse(
+            {
+                'message': 'User Notes saved successfully!',
+                'hasBadWord' : nicknameHasBadWord or contentHasBadWord or hasOwnerNickname or nicknameCanbeHTML or contentCanbeHTML,
+            }
+        )
     elif request.method == 'GET':
         return render(request , 'write_notes_screens.html' )
     else:
         return JsonResponse({'error': 'Invalid request method'})
-
 
 @csrf_exempt
 def suggestion_page(request):

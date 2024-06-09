@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>OC Notes</title>
 
     <link rel="stylesheet" href="{% static 'css\write_notes_screens_design.css' %}">
     <script defer scr="{% static 'script\sticky_notes_wall.js' %}"></script>
@@ -132,6 +132,14 @@
                         <button onclick="changeEmoji('😴')">😴</button>
                         <button onclick="changeEmoji('😢')">😢</button>
                         <button onclick="changeEmoji('😡')">😡</button>
+                        <button onclick="changeEmoji('🤔')">🤔</button>
+                        <button onclick="changeEmoji('😎')">😎</button>
+                        <button onclick="changeEmoji('😚')">😚</button>
+                        <button onclick="changeEmoji('🥵')">🥵</button>
+                        <button onclick="changeEmoji('🤮')">🤮</button>
+                        <button onclick="changeEmoji('😮')">😮</button>
+                        <button onclick="changeEmoji('😒')">😒</button>
+                        <button onclick="changeEmoji('😌')">😌</button>
                     </div>
 
                 </div>
@@ -220,8 +228,14 @@
                     'emoji' : emoji
                 },
                 success: function(response) {
-                    alert('User suggestion saved successfully!');
-                    changeTemplate('{% url 'home' %}');
+                    console.log(response['hasBadWord']);
+                    if (response['hasBadWord']){
+                        alert('Pasintabi lang po na wag maglagay ng ikakasira ng OC Notes para sa ikakabuti ng lahat o lagyan nyu ng \"*\" kung gusto nyu ipaste! Salamat po.')
+                    } else {
+                        alert('Napaste na ang inyong Note! tara na\'t tingnan natin!');
+                        changeTemplate('{% url 'home' %}');
+                    }
+                    
                 },
                 error: function(xhr, status, error) {
                     console.error('Error saving user suggestion:', error);
