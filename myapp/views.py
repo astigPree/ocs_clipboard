@@ -8,7 +8,7 @@ from .models import StickyNote, UserSuggestion
 from html.parser import HTMLParser
 
 
-NUMBER_OF_NOTES_TO_DISPLAY = 20
+NUMBER_OF_NOTES_TO_DISPLAY = 10
 BAD_WORDS = (
     'puta', 'pota', 'tangina', 'gago' , 'bobo' , 'bubo' , 'bubu' , 'bobu' , 'gaga', 'patay', 'matay', 'natay', 'amp', 'nigga', 'yawa',
     'pisot' , 'bayag', 'buto', 'totoy', 'boto', 'letche', 'itot', 'lolo' , 'salsal', 'jabol', 'pusli', 'shabu', 'whana', 'bilat', 'belat',
@@ -16,6 +16,20 @@ BAD_WORDS = (
     'kant', 'yatis', 'ngina','shuta','nigger','negro','pampam','whore','slut','gagi','shole','hoe','shit','fuck','bitch','ock','uss',
     'cunt','shat','shite','jaku','kanor','jako',
 )
+
+fontStyles = {
+    1: 'Poetsen One',
+    2: 'Quicksand',
+    3: 'Comic Sans MS, Comic Sans, cursive',
+    4: 'Arial Rounded MT Bold, Arial, sans-serif',
+    5: 'Lucida Handwriting, cursive',
+    6: 'Bradley Hand, cursive',
+    7: 'Chalkboard SE, sans-serif',
+    8: 'Dakota, cursive',
+    9: 'Permanent Marker, cursive',
+    10: 'Indie Flower, cursive'
+}
+
 
 
 class MyHTMLParser(HTMLParser):
@@ -29,7 +43,6 @@ class MyHTMLParser(HTMLParser):
 def willMakeAHTMLObject(text: str) -> bool:
     parser = MyHTMLParser()
     parser.feed(text)
-    print(parser.contains_html)
     return parser.contains_html
 
 def isBadWords(sentence : str, word : str) -> bool:
@@ -51,23 +64,19 @@ def hasBadWord(sentence : str) -> bool:
 
 def get_incremental_sticky_notes(start_id, count):
     sticky_notes = list(StickyNote.objects.filter(id__gte=start_id).order_by('id')[:count])
-    print(f"Sticky Notes Incremental : {sticky_notes}")
     sticky_notes.reverse()
     return sticky_notes
 
 def next_page(start_id):
     sticky_notes = StickyNote.objects.filter(id__lt=start_id).order_by('-id')[:NUMBER_OF_NOTES_TO_DISPLAY]
-    print(f"Next Page: {sticky_notes}")
     return sticky_notes
 
 def previous_page(start_id):
     sticky_notes = StickyNote.objects.filter(id__gt=start_id).order_by('id')[:NUMBER_OF_NOTES_TO_DISPLAY:-1]
-    print(f"Previous Page: {sticky_notes}")
     return sticky_notes
     
 def get_decremental_sticky_notes(start_id, count):
     sticky_notes = list(StickyNote.objects.filter(id__lte=start_id).order_by('-id')[:count])
-    print(f"Sticky Notes Decremental : {sticky_notes}")
     sticky_notes.reverse()
     return sticky_notes
 
@@ -75,9 +84,6 @@ def sticky_notes_view(request):
     if request.method == 'POST':
         direction = request.POST.get('direction')
         start_id = request.POST.get('start_id')
-        count = NUMBER_OF_NOTES_TO_DISPLAY
-        
-        print(f"\n\ndirection : {direction} \nstart_id : {start_id} \ncount: {count}")
         
         start_id = int(request.POST.get('start_id'))
 
@@ -95,7 +101,7 @@ def sticky_notes_view(request):
                 "nickname": note.nickname, "nickname_color": note.nickname_color, 
                 "nickname_font": note.nickname_font, "content": note.content, 
                 "content_color": note.content_color, "content_font": note.content_font,
-                "emoji": note.emoji , 'note_id': note.id
+                "emoji": note.emoji , 'note_id': note.id 
             }
             for note in sticky_notes
         ]
@@ -111,7 +117,6 @@ def sticky_notes_view(request):
         return JsonResponse({'error': 'Invalid request method'}, status=405)
 
 def clipboard_list_page(request):
-    print(isBadWords("Hello ako po ito is max" , 'mox'))
     
     if request.method == "GET":
         notes = sticky_notes = StickyNote.objects.all().order_by('-id')[:NUMBER_OF_NOTES_TO_DISPLAY]
@@ -125,11 +130,13 @@ def write_notes(request):
         nickname = request.POST.get('nickname')
         nickname_color = request.POST.get('nickname_color')
         nickname_font = request.POST.get('nickname_font')
+        nickname_font_index = request.POST.get('nickname_font_index')
         content = request.POST.get('content')
         content_color = request.POST.get('content_color')
         content_font = request.POST.get('content_font')
+        content_font_index = request.POST.get('content_font_index')
         emoji = request.POST.get('emoji')
-        
+                
         nicknameHasBadWord = hasBadWord(nickname)
         contentHasBadWord = hasBadWord(content)
         nicknameCanbeHTML = willMakeAHTMLObject(nickname)
@@ -140,12 +147,15 @@ def write_notes(request):
         
         if not nicknameHasBadWord and not contentHasBadWord and not hasOwnerNickname and not nicknameCanbeHTML and not contentCanbeHTML:
             #nickname = 'Makietech' if hasOwnerNickname else nickname
-            sticky_note = StickyNote(
+            try:
+                sticky_note = StickyNote(
                 nickname=nickname, nickname_color=nickname_color, nickname_font=nickname_font,
                 content=content, content_color=content_color, content_font=content_font,
-                emoji=emoji
+                emoji=emoji , nickname_font_index = int(nickname_font_index), content_font_index = (content_font_index)
                 )
-            sticky_note.save()
+                sticky_note.save()
+            except ValueError:
+                pass
             
         return JsonResponse(
             {

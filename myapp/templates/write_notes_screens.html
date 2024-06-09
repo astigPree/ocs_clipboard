@@ -194,6 +194,19 @@
 
     
     <script>
+        const fontStyles = {
+            '--primary-font': 1,
+            '--secondary-font': 2,
+            '--comic-san': 3,
+            '--arial-rounded': 4,
+            '--lucida-writing': 5,
+            '--bradley-hand': 6,
+            '--chalkboard-se': 7,
+            '--dakota': 8,
+            '--permanent-marker': 9,
+            '--indie-flower': 10
+          };
+
         function saveUserNotes() {
             // Get the form value
             var nickname = document.getElementById('nickname').value;
@@ -222,10 +235,13 @@
                     'nickname': nickname,
                     'nickname_color' : nickname_color,
                     'nickname_font' : nickname_font,
+                    'nickname_font_index' : fontStyles[nickname_font],
                     'content': content,
                     'content_color' : content_color,
                     'content_font' : content_font,
+                    'content_font_index' : fontStyles[content_font],
                     'emoji' : emoji
+                    
                 },
                 success: function(response) {
                     console.log(response['hasBadWord']);
