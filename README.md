@@ -19,6 +19,5 @@
 - Angelika Castillo
 - Classmates
 
-## Preview
-
-![Application Interface](App_Images/content.png)
+## Preview Desktop
+![Desktop](OC NOTES/desktop view home.png)
